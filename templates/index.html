@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Flashcard Project</title>
-    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="resources/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <!-- Apply navigation menu to this -->
@@ -25,9 +25,16 @@
       <button type="button" id="back">Back</button>
       <button type="button" id="skip">Skip</button>
     </div> -->
-    <div class="flashcard">
-      <h3 class="flashcard-contents">Select difficulty</h3>
-      <span id="start-button" class="flashcard-contents">Begin!</span>
+    <div class="flashcard-container" align="center">
+      <div class="flashcard" align="center">
+        <h2 id="default-text">Select difficulty:</h2>
+        <button>Easy</button>
+        <button>Medium</button>
+        <button>Hard</button>
+      </div>
+      <div id="start-button-container">
+        <button id="start-button">Begin!</button>
+      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
