@@ -1,3 +1,8 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #efefef;
 }
@@ -5,8 +10,8 @@ body {
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
-    padding: 0.3em;
-    margin: 0.5em;
+    padding: 0.8em;
+    margin: 0;
     background-color: #FF8A8A;
     color: #FFF;
     position: absolute;
@@ -15,29 +20,40 @@ body {
 .dropdown-content {
     float: left;
     padding: 0.5em 1em;
-    border: 1px dashed gray;
-    display: block;
     background-color: #FFDEDE;
     top: 0;
+    clear: both;
 }
 
 .title-header {
     text-align: center;
     margin: 0;
-    padding: 0.5em 0;
+    padding: 0.56em 0;
     vertical-align: middle;
+    background-color: white;
+}
+
+.flashcard-container {
+  margin-top: 5em;
 }
 
 .flashcard {
+  position: relative;
   height: 400px;
   width: 650px;
   background-color: white;
+  justify-content: center;
+  display: block;
+}
+
+#formatting-sucks {
+  position: relative;
+  padding-top: 25%;
 }
 
 #default-text {
-  position: relative;
-  top: 4em;
-  text-align: center;
+  margin: 0;
+  top: 45%;
 }
 
 .cardButtons{
@@ -45,7 +61,7 @@ body {
     min-width: 500px;
     max-width: 60%;
 }
-#back {
+#back #skip{
     position: relative;
     float: left;
     background-color: #FFECF5;
@@ -58,27 +74,18 @@ body {
     font-size: 16px;
     border-radius: 4px;
 }
-#back:hover {
-    background-color: #FFBBBB;
-}
-#skip {
-    position: relative;
-    float: right;
-    background-color: #FFECF5;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;     font-weight: 900;
-    font-size: 16px;
-    border-radius: 4px;
-}
-#skip:hover {
+
+#back:hover #skip:hover {
     background-color: #FFBBBB;
 }
 
+#skip {
+    float: right;
+}
+
 #start-button-container {
-  margin: 0.55em 0;
+  position: relative;
+  margin: 0.65em;
 }
 
 #start-button{
@@ -91,7 +98,6 @@ body {
     font-size: 16px;
     border-radius: 4px;
 }
-
 
 #start-button:hover {
     background-color: #FFDEDE;
