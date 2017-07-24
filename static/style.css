@@ -15,6 +15,7 @@ body {
     background-color: #FF8A8A;
     color: #FFF;
     position: absolute;
+    cursor: pointer;
 }
 
 .dropdown-content {
@@ -23,6 +24,20 @@ body {
     background-color: #FFDEDE;
     top: 0;
     clear: both;
+}
+
+.dropdown-content h4 {
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+#settings-menu {
+  margin: 0;
+  cursor: pointer;
+}
+
+.le-settings {
+  padding-left: 1em;
 }
 
 .title-header {
