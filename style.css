@@ -1,0 +1,99 @@
+html, body {
+    background-color: #F2F2F2;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu {
+    float: left;
+    font-size: 1.25em;
+    padding: 0.3em;
+    margin: 0.5em;
+    background-color: #FF8A8A;
+    color: #FFF;
+}
+
+.dropdown-content {
+    float: left;
+    padding: 0.5em 1em;
+    border: 1px dashed gray;
+    display: block;
+    background-color: #FFDEDE;
+    top: 0;
+}
+
+.title-header {
+    text-align: center;
+    margin: 0;
+    padding: 0.5em 0;
+    vertical-align: middle;
+}
+
+.flashcard {
+    margin: auto;
+    background-color: white;
+    min-height: 300px;
+    min-width: 500px;
+    max-height: 50%;
+    max-width: 60%;
+    border: 1px solid black;
+}
+.flashcard h2{
+    text-align: center;
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cardButtons{
+    margin: auto;
+    min-width: 500px;
+    max-width: 60%;
+}
+#back {
+    position: relative;
+    float: left;
+    background-color: #FFECF5;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 16px;tn   border-radius: 4px;
+}
+#back:hover {
+    background-color: #FFBBBB;
+}
+#skip {
+    position: relative;
+    float: right;
+    background-color: #FFECF5;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;     font-weight: 900;
+    font-size: 16px;
+    border-radius: 4px;
+}
+#skip:hover {
+    background-color: #FFBBBB;
+}
+#start-button{
+    background-color:#FF8A8A;
+    border: none;
+    color: white;
+   padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    border-radius: 4px;
+    position: absolute;
+
+}
+#start-button:hover {
+    background-color: #FFDEDE;
+}
