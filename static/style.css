@@ -29,20 +29,15 @@ body {
 }
 
 .flashcard {
-    margin: auto;
-    margin-top: 5em;
-    background-color: white;
-    height: 400px;
-    width: 650px;
-    display: flex;
-    align-items: center;
-    border: 1px solid black;
-    justify-content: center;
-    left: 3em;
+  height: 400px;
+  width: 650px;
+  background-color: white;
 }
 
-.flashcard-contents {
-  display: inline; 
+#default-text {
+  position: relative;
+  top: 4em;
+  text-align: center;
 }
 
 .cardButtons{
@@ -60,7 +55,8 @@ body {
     text-align: center;
     text-decoration: none;
     font-weight: 900;
-    font-size: 16px;tn   border-radius: 4px;
+    font-size: 16px;
+    border-radius: 4px;
 }
 #back:hover {
     background-color: #FFBBBB;
@@ -80,17 +76,23 @@ body {
 #skip:hover {
     background-color: #FFBBBB;
 }
+
+#start-button-container {
+  margin: 0.55em 0;
+}
+
 #start-button{
     background-color:#FF8A8A;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 0.6em 1.2em;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    display: inline-block;
     border-radius: 4px;
 }
+
+
 #start-button:hover {
     background-color: #FFDEDE;
 }
