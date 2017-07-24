@@ -1,7 +1,5 @@
-html, body {
-    background-color: #F2F2F2;
-    margin: 0;
-    padding: 0;
+body {
+  background-color: #efefef;
 }
 
 .dropdown-menu {
@@ -11,6 +9,7 @@ html, body {
     margin: 0.5em;
     background-color: #FF8A8A;
     color: #FFF;
+    position: absolute;
 }
 
 .dropdown-content {
@@ -31,21 +30,21 @@ html, body {
 
 .flashcard {
     margin: auto;
+    margin-top: 5em;
     background-color: white;
-    min-height: 300px;
-    min-width: 500px;
-    max-height: 50%;
-    max-width: 60%;
+    height: 400px;
+    width: 650px;
+    display: flex;
+    align-items: center;
     border: 1px solid black;
+    justify-content: center;
+    left: 3em;
 }
-.flashcard h2{
-    text-align: center;
-    position: relative;
-    float: left;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
+.flashcard-contents {
+  display: inline; 
 }
+
 .cardButtons{
     margin: auto;
     min-width: 500px;
@@ -85,14 +84,12 @@ html, body {
     background-color:#FF8A8A;
     border: none;
     color: white;
-   padding: 15px 32px;
+    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
     display: inline-block;
     border-radius: 4px;
-    position: absolute;
-
 }
 #start-button:hover {
     background-color: #FFDEDE;

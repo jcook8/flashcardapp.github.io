@@ -1,0 +1,21 @@
+html, body {
+    background-color: #F2F2F2;
+}
+
+#start-button {
+  padding: 0.3em 0.6em;
+  font-size: 1.2em;
+  background-color: #ff6363;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  float: left;
+}
+
+.flashcard {
+  border: 1px dashed gray;
+  display: block;
+}
+
+.flashcard h3 {
+  margin: 0;
+}
