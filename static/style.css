@@ -1,48 +1,80 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: #efefef;
+  background-color: #FFF;
+  z-index: 0;
 }
 
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
-    padding: 0.3em;
-    margin: 0.5em;
-    background-color: #FF8A8A;
+    padding: 0.78em 0.8em;
+    margin: 0;
+    background-color: #ef2828;
     color: #FFF;
     position: absolute;
+    cursor: pointer;
+    font-family: "Roboto", serif;
 }
 
 .dropdown-content {
     float: left;
     padding: 0.5em 1em;
-    border: 1px dashed gray;
-    display: block;
     background-color: #FFDEDE;
-    top: 0;
+    top: 55px;
+    clear: both;
+    z-index: 100;
+    position: absolute;
+    font-family: "Roboto", serif;
+}
+
+.dropdown-content h4 {
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+#settings-menu {
+  margin: 0;
+  cursor: pointer;
+}
+
+.le-settings {
+  padding-left: 1em;
 }
 
 .title-header {
     text-align: center;
     margin: 0;
-    padding: 0.5em 0;
+    padding: 0.56em 0;
     vertical-align: middle;
+    background-color: rgba(252, 100, 30, 0.3);
+    font-family: "Roboto", serif;
+}
+
+.flashcard-container {
+  margin: 5em 0;
 }
 
 .flashcard {
-    margin: auto;
-    margin-top: 5em;
-    background-color: white;
-    height: 400px;
-    width: 650px;
-    display: flex;
-    align-items: center;
-    border: 1px solid black;
-    justify-content: center;
-    left: 3em;
+  display: flex;
+  align-items: center;
+  height: 400px;
+  width: 650px;
+  background-color: #ddd;
+  justify-content: center;
+  border-radius: 10px;
 }
 
-.flashcard-contents {
-  display: inline; 
+#word {
+  position: absolute;
+  margin: 0;
+  font-size: 9.375em;
+  font-family: "Raleway", serif;
+  opacity: 0.5;
+
 }
 
 .cardButtons{
@@ -50,7 +82,7 @@ body {
     min-width: 500px;
     max-width: 60%;
 }
-#back {
+#back #skip{
     position: relative;
     float: left;
     background-color: #FFECF5;
@@ -60,37 +92,67 @@ body {
     text-align: center;
     text-decoration: none;
     font-weight: 900;
-    font-size: 16px;tn   border-radius: 4px;
-}
-#back:hover {
-    background-color: #FFBBBB;
-}
-#skip {
-    position: relative;
-    float: right;
-    background-color: #FFECF5;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;     font-weight: 900;
     font-size: 16px;
     border-radius: 4px;
 }
-#skip:hover {
+
+#back:hover #skip:hover {
     background-color: #FFBBBB;
 }
+
+#skip {
+    float: right;
+}
+
+#start-button-container {
+  position: relative;
+  margin: 1.5em 0;
+  display: none;    /* this is the thing you're trying to do i guess? */
+}
+
 #start-button{
     background-color:#FF8A8A;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 0.6em 1.2em;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    display: inline-block;
     border-radius: 4px;
+    cursor: pointer;
+    font-family: "Roboto", serif;
 }
+
 #start-button:hover {
     background-color: #FFDEDE;
+}
+
+#answer-options-list {
+  list-style: none;
+  margin: 0.5em 0;
+  padding: 0;
+  font-family: Roboto, serif;
+}
+
+.options-container {
+  background-color: #e5e5e5;
+  width: 650px;
+  margin: 5px 0;
+  padding: 0.39em 0;
+  font-size: 1.3em;
+  overflow-wrap: break-word;
+  border-radius: 10px;
+  display: flex;
+}
+
+.optionletters {
+  left: 0;
+  position: relative;
+  align-self: center;
+  margin: 0 1em;
+}
+
+.answer-options {
+  padding: 0.39em 1em;
+  border-left: 1px solid gray;
 }
