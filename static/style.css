@@ -120,6 +120,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-family: "Roboto", serif;
+    display: none;    /* this is the thing you're trying to do i guess? */
 }
 
 #start-button:hover {
