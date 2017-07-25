@@ -25,8 +25,13 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/index.html')
         self.response.out.write(template.render())
-        print 'for no reason'
+
+class SavedHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('templates/saved.html')
+        self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/saved', SavedHandler)
 ], debug=True)
