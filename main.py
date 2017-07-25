@@ -18,6 +18,14 @@ import webapp2
 import os
 import sys
 import jinja2
+from wordnik import *
+
+apiUrl = 'http://api.wordnik.com/v4'
+apiKey = '6089226ee40a95fbb230a04f01406ab804d9b51cebc36272c'
+client = swagger.ApiClient(apiKey, apiUrl)
+
+wordApi = WordApi.WordApi(client)
+example = wordApi.getTopExample('irony')
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -25,6 +33,7 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/index.html')
         self.response.out.write(template.render())
+    print example.text
 
 class SavedHandler(webapp2.RequestHandler):
     def get(self):
