@@ -13,7 +13,7 @@ body {
     font-size: 1.25em;
     padding: 0.78em 0.8em;
     margin: 0;
-    background-color: #FF8A8A;
+    background-color: #ef2828;
     color: #FFF;
     position: absolute;
     cursor: pointer;
@@ -50,7 +50,7 @@ body {
     margin: 0;
     padding: 0.56em 0;
     vertical-align: middle;
-    background-color: #A33;
+    background-color: rgba(252, 100, 30, 0.3);
     font-family: "Roboto", serif;
 }
 
@@ -65,7 +65,7 @@ body {
   width: 650px;
   background-color: #ddd;
   justify-content: center;
-
+  border-radius: 10px;
 }
 
 #word {
@@ -107,6 +107,7 @@ body {
 #start-button-container {
   position: relative;
   margin: 1.5em 0;
+  display: none;    /* this is the thing you're trying to do i guess? */
 }
 
 #start-button{
@@ -120,9 +121,38 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-family: "Roboto", serif;
-    display: none;    /* this is the thing you're trying to do i guess? */
 }
 
 #start-button:hover {
     background-color: #FFDEDE;
+}
+
+#answer-options-list {
+  list-style: none;
+  margin: 0.5em 0;
+  padding: 0;
+  font-family: Roboto, serif;
+}
+
+.options-container {
+  background-color: #e5e5e5;
+  width: 650px;
+  margin: 5px 0;
+  padding: 0.39em 0;
+  font-size: 1.3em;
+  overflow-wrap: break-word;
+  border-radius: 10px;
+  display: flex;
+}
+
+.optionletters {
+  left: 0;
+  position: relative;
+  align-self: center;
+  margin: 0 1em;
+}
+
+.answer-options {
+  padding: 0.39em 1em;
+  border-left: 1px solid gray;
 }
