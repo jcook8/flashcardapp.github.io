@@ -11,19 +11,20 @@ body {
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
-    padding: 0.78em 0.8em;
+    padding: 0.78em 2em;
     margin: 0;
-    background-color: #ef2828;
+    background-color: #24b41d;
     color: #FFF;
     position: absolute;
     cursor: pointer;
     font-family: "Roboto", serif;
+    opacity: 0.78;
 }
 
 .dropdown-content {
     float: left;
-    padding: 0.5em 1em;
-    background-color: #FFDEDE;
+    padding: 0.6em 1.36em 0.6em 1.1em;
+    background-color: rgba(59, 178, 53, 0.8);
     top: 55px;
     clear: both;
     z-index: 100;
@@ -42,7 +43,8 @@ body {
 }
 
 .le-settings {
-  padding-left: 1em;
+  margin-left: 0.5em;
+  margin-right: -0.5em;
 }
 
 .title-header {
@@ -50,8 +52,12 @@ body {
     margin: 0;
     padding: 0.56em 0;
     vertical-align: middle;
-    background-color: rgba(252, 100, 30, 0.3);
+    background-color: rgba(241, 255, 242, 1.0);
     font-family: "Roboto", serif;
+}
+
+.title-header, .dropdown-content {
+  box-shadow: 0 5px 25px rgba(110, 110, 110, 0.2);
 }
 
 .flashcard-container {
