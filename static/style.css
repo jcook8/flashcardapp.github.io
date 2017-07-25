@@ -8,6 +8,23 @@ body {
   z-index: 0;
 }
 
+a {
+  color: black;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
