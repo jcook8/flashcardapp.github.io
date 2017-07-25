@@ -4,26 +4,31 @@ html, body {
 }
 
 body {
-  background-color: #efefef;
+  background-color: #FFF;
+  z-index: 0;
 }
 
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
-    padding: 0.8em;
+    padding: 0.78em 0.8em;
     margin: 0;
     background-color: #FF8A8A;
     color: #FFF;
     position: absolute;
     cursor: pointer;
+    font-family: "Roboto", serif;
 }
 
 .dropdown-content {
     float: left;
     padding: 0.5em 1em;
     background-color: #FFDEDE;
-    top: 0;
+    top: 55px;
     clear: both;
+    z-index: 100;
+    position: absolute;
+    font-family: "Roboto", serif;
 }
 
 .dropdown-content h4 {
@@ -45,30 +50,31 @@ body {
     margin: 0;
     padding: 0.56em 0;
     vertical-align: middle;
-    background-color: white;
+    background-color: #A33;
+    font-family: "Roboto", serif;
 }
 
 .flashcard-container {
-  margin-top: 5em;
+  margin: 5em 0;
 }
 
 .flashcard {
-  position: relative;
+  display: flex;
+  align-items: center;
   height: 400px;
   width: 650px;
-  background-color: white;
+  background-color: #ddd;
   justify-content: center;
-  display: block;
+
 }
 
-#formatting-sucks {
-  position: relative;
-  padding-top: 25%;
-}
-
-#default-text {
+#word {
+  position: absolute;
   margin: 0;
-  top: 45%;
+  font-size: 9.375em;
+  font-family: "Raleway", serif;
+  opacity: 0.5;
+
 }
 
 .cardButtons{
@@ -100,7 +106,7 @@ body {
 
 #start-button-container {
   position: relative;
-  margin: 0.65em;
+  margin: 1.5em 0;
 }
 
 #start-button{
@@ -112,6 +118,8 @@ body {
     text-decoration: none;
     font-size: 16px;
     border-radius: 4px;
+    cursor: pointer;
+    font-family: "Roboto", serif;
 }
 
 #start-button:hover {
