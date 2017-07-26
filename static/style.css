@@ -94,7 +94,8 @@ a:hover {
 #word {
   position: absolute;
   margin: 0;
-  font-size: 9.375em;
+  font-size: 16px;
+  font-size: 8vw;
   font-family: "Raleway", serif;
   opacity: 0.5;
 
@@ -178,4 +179,5 @@ a:hover {
 .answer-options {
   padding: 0.39em 1em;
   border-left: 1px solid gray;
+  text-align: left;
 }
