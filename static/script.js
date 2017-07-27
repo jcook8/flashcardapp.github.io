@@ -15,13 +15,26 @@ function sendText(optiontext) {
 function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile){
     console.log(responseFromPyFile);
     console.log(lastClicked);
+    correctness = null;
     if (responseFromPyFile == "True") {
+<<<<<<< HEAD
       $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
 
+=======
+        $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
+        correctness = "True"
+        console.log(correctness)
+>>>>>>> origin/JessesChanges
     } else if (responseFromPyFile == "False"){
-      $('#' + lastClicked).addClass('incorrectOption').find('li').css("border-color", "white");
-
+        $('#' + lastClicked).addClass('incorrectOption').find('li').css("border-color", "white");
+        correctness = "False"
+        console.log(correctness)
     }
+    $.post("/", {"selection": correctness}, function(data) {
+        console.log(data);
+        $('#scoreNum').text(JSON.parse(data).newscore);
+        window.location = "/";
+    });
 }
 var lastClicked;
 function sendOptionA(){
