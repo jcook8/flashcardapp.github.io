@@ -47,67 +47,14 @@ class WordStore(ndb.Model):
 
 class MainHandler(webapp2.RequestHandler):
     definitionOfDisplayedWord = None
-
-    def get(self):
-        template = env.get_template('templates/index.html')
-        randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
-                                            includePartOfSpeech = 'noun',
-                                            excludePartOfSpeech = 'proper-noun-plural',
-                                            minLength = 3,
-                                            maxLength = -1,
-                                            minDictionaryCount = 1,
-                                            maxDictionaryCount = -1,
-                                            minCorpusCount = 0,
-                                            maxCorpusCount = -1,
-                                            limit = 4)
-        i = randint(0, 3)
-        array = []
-        for randomword in randomWords:
-          definitions = wordApi.getDefinitions(randomword.word,
-                                             sourceDictionaries = 'all',
-                                             limit = 1)
-          array.append(definitions[0].text)
-
-        #wordrandom = randomWords[i].text
-        MainHandler.definitionOfDisplayedWord = array[i]
-
-
-        main_var = {'word': randomWords[i].word,
-                    'def1': array[0],
-                    'def2': array[1],
-                    'def3': array[2],
-                    'def4': array[3]}
-        #main_var_json = json.dumps(main_var)
-        #newwords = {'json_newwords': main_var_json}
-        self.response.out.write(template.render(main_var))
-
-    def post(self):
-        selectionToCompare = self.request.get("option")
-        print selectionToCompare
-        print MainHandler.definitionOfDisplayedWord
-        if selectionToCompare.strip() == MainHandler.definitionOfDisplayedWord.strip():
-            response = "True"
-        else:
-            response = "False"
-
-        return_data = {"answer": response}
-        self.response.write(json.dumps(return_data))
-
-class SavedHandler(webapp2.RequestHandler):
-    def get(self):
-        template = env.get_template('templates/saved.html')
-        self.response.out.write(template.render())
-
-class Test2Handler(webapp2.RequestHandler):
-    definitionOfDisplayedWord = None
-    testvar = None
+    main_var = None
     randomWords = None
     displayedWord = None
     incorrectWord = None
     score = 0
     def get(self):
-        template = env.get_template('templates/test.html')
-        Test2Handler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
+        template = env.get_template('templates/index.html')
+        MainHandler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
                                             includePartOfSpeech = 'noun',
                                             excludePartOfSpeech = 'proper-noun-plural',
                                             minLength = 3,
@@ -119,29 +66,30 @@ class Test2Handler(webapp2.RequestHandler):
                                             limit = 4)
         i = randint(0, 3)
         array = []
-        for randomword in Test2Handler.randomWords:
+        for randomword in MainHandler.randomWords:
           definitions = wordApi.getDefinitions(randomword.word,
                                              sourceDictionaries = 'all',
                                              limit = 1)
           array.append(definitions[0].text)
         #wordrandom = randomWords[i].text
-        Test2Handler.definitionOfDisplayedWord = array[i]
-        Test2Handler.displayedWord = Test2Handler.randomWords[i].word
+        MainHandler.definitionOfDisplayedWord = array[i]
+        MainHandler.displayedWord = MainHandler.randomWords[i].word
 
-        testvar = {'word': Test2Handler.randomWords[i].word,
+        main_var = {'word': MainHandler.randomWords[i].word,
                     'def1': array[0],
                     'def2': array[1],
                     'def3': array[2],
-                    'def4': array[3]}
+                    'def4': array[3],
+                    'score': MainHandler.score}
 
-        self.response.out.write(template.render(testvar))
+        self.response.out.write(template.render(main_var))
 
     def post(self):
         selectionToCompare = self.request.get("option")
         if not selectionToCompare:
             self.processAnswer()
             return
-        if selectionToCompare.strip() == Test2Handler.definitionOfDisplayedWord.strip():
+        if selectionToCompare.strip() == MainHandler.definitionOfDisplayedWord.strip():
             response = "True"
         else:
             response = "False"
@@ -152,19 +100,22 @@ class Test2Handler(webapp2.RequestHandler):
     def processAnswer(self):
         checkAnswer = self.request.get("selection")
         if checkAnswer == "True":
-            Test2Handler.score += 1
+            MainHandler.score += 1
         else:
-            Test2Handler.incorrectWord = Test2Handler.displayedWord
+            MainHandler.incorrectWord = MainHandler.displayedWord
 
-        newscore = {"newscore": Test2Handler.score}
+        newscore = {"newscore": MainHandler.score}
         self.response.write(json.dumps(newscore))
 
-        wrongword = WordStore(word = Test2Handler.incorrectWord, definition = Test2Handler.definitionOfDisplayedWord)
+        wrongword = WordStore(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
         key = wrongword.put()
-        
+
+class SavedHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('templates/saved.html')
+        self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/saved', SavedHandler),
-    ('/testing2', Test2Handler)
+    ('/saved', SavedHandler)
 ], debug=True)
