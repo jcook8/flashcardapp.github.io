@@ -60,11 +60,6 @@ function setupHandlersWhenYouChooseAnAnswer(){
 }
 $('#signOut').hide();
 
-function initSignIns() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    //if
-}
-
 function showSignOutButton(){
     $('#signOut').show();
 }
