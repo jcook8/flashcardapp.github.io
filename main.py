@@ -117,8 +117,6 @@ class MainHandler(webapp2.RequestHandler):
         newscore = {"newscore": MainHandler.score}
         self.response.write(json.dumps(newscore))
 
-
-
 class WrongHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/wrong.html')
