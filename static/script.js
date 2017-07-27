@@ -9,8 +9,9 @@ function sendText(optiontext) {
     declareWhetherAnswerIsCorrectOrNotThenAddNextButton(JSON.parse(data).answer)
   });
 }
-
+$('#next').hide()
 function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile){
+
     console.log(responseFromPyFile);
     console.log(lastClicked);
     correctness = null;
@@ -26,9 +27,15 @@ function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile)
     $.post("/", {"selection": correctness}, function(data) {
         console.log(data);
         $('#scoreNum').text(JSON.parse(data).newscore);
-        window.location = "/";
+    });
+    $('.options-container').css("pointer-events", "none");
+    $('#nextButtonPlaceholder').hide()
+    $('#next').show()
+    $('#next').click( function (){
+      window.location.assign("/")
     });
 }
+
 var lastClicked;
 function sendOptionA(){
   sendText( $('#option-one').text());
