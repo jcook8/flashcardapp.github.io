@@ -31,13 +31,8 @@ apiUrl = 'http://api.wordnik.com/v4'
 apiKey = 'f0261de6207a638a679085cc16b08c782598f242708775355'
 client = swagger.ApiClient(apiKey, apiUrl)
 
-#Darrell's Key = '6089226ee40a95fbb230a04f01406ab804d9b51cebc36272c'
-
 wordApi = WordApi.WordApi(client)
 wordsApi = WordsApi.WordsApi(client)
-
-#response = Request("http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=2&maxDictionaryCount=-1&minLength=3&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5")
-
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -45,6 +40,7 @@ env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__
 class WrongWord(ndb.Model):
     word = ndb.StringProperty()
     definition = ndb.StringProperty()
+
 class User(ndb.Model):
     ID = ndb.StringProperty();
     nickname = ndb.StringProperty();
