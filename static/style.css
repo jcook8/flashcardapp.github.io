@@ -171,6 +171,7 @@ a:hover {
 
 #score {
   float: right;
+  clear: right;
   font-family: 'Raleway', serif;
   font-size: 1.3em;
   margin: 0.5em 1.2em;
