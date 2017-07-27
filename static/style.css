@@ -200,6 +200,14 @@ a:hover {
   cursor: pointer;
 }
 
+#score {
+  float: right;
+  font-family: 'Raleway', serif;
+  font-size: 1.3em;
+  margin: 0.5em 1.2em;
+  
+}
+
 .optionletters {
   left: 0;
   position: relative;
