@@ -110,12 +110,12 @@ class MainHandler(webapp2.RequestHandler):
         wrongword = WordStore(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
         key = wrongword.put()
 
-class SavedHandler(webapp2.RequestHandler):
+class WrongHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/saved.html')
         self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/saved', SavedHandler)
+    ('/wrong', SavedHandler)
 ], debug=True)
