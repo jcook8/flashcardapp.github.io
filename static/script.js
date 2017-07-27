@@ -17,14 +17,10 @@ function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile)
     console.log(lastClicked);
     correctness = null;
     if (responseFromPyFile == "True") {
-<<<<<<< HEAD
       $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
-
-=======
         $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
         correctness = "True"
         console.log(correctness)
->>>>>>> origin/JessesChanges
     } else if (responseFromPyFile == "False"){
         $('#' + lastClicked).addClass('incorrectOption').find('li').css("border-color", "white");
         correctness = "False"
@@ -78,12 +74,18 @@ function showSignOutButton(){
 }
 
 function onSignIn(googleUser) {
+  console.log(googleUser);
   var profile = googleUser.getBasicProfile();
+  var id_token = googleUser.getAuthResponse().id_token;
+  var nickname = "cheese";
   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
+  $.post("/", {"ID": id_token, "nick": nickname}, function(data){
+    console.log(data);
+  });
 }
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
@@ -95,6 +97,7 @@ function signOut() {
 }
 function onSuccess(googleUser) {
   console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+  onSignIn(googleUser);
   $('#my-signin2').hide();
   showSignOutButton();
 }
