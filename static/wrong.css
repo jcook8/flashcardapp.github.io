@@ -8,11 +8,6 @@ body {
   z-index: 0;
 }
 
-h1{
-  text-align: center;
-  font-family: "Roboto", serif;
-}
-
 a {
   color: black;
 }
@@ -99,74 +94,11 @@ a:hover {
 #word {
   position: absolute;
   margin: 0;
-  font-size: 6vw;
+  font-size: 16px;
+  font-size: 7vw;
   font-family: "Raleway", serif;
   opacity: 0.5;
-}
 
-
-#start-button-container {
-  position: relative;
-  margin: 1.5em 0;
-  display: none;
-}
-
-#start-button{
-  background-color:#FF8A8A;
-  border: none;
-  color: white;
-  padding: 0.6em 1.2em;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: "Roboto", serif;
-}
-
-#answer-options-list {
-  list-style: none;
-  margin: 0.5em 0;
-  padding: 0;
-  font-family: Roboto, serif;
-}
-
-#my-signin2 {
-  float: right;
-/*  padding: 0.78em 2em;*/
-  margin: 0;
-  /*background-color: #24b41d;*/
-  /*position: absolute;*/
-  cursor: pointer;
-  font-family: "Roboto", serif;
-  opacity: 0.78;
-  box-shadow: none;
-}
-
-#signOut {
-  float: right;
-  font-size: 1.25em;
-  padding: 0.78em 2em;
-  margin: 0;
-  background-color: #24b41d;
-  color: #FFF;
-  /*position: absolute;*/
-  cursor: pointer;
-  font-family: "Roboto", serif;
-  opacity: 0.78;
-}
-
-.options-container {
-  background-color: #e5e5e5;
-  width: 650px;
-  margin: 5px 0;
-  padding: 0.39em 0;
-  font-size: 1.3em;
-  overflow-wrap: break-word;
-  border-radius: 10px;
-  display: flex;
-  cursor: pointer;
-  text-align: left;
 }
 
 #score {
@@ -178,41 +110,10 @@ a:hover {
 }
 
 .optionletters {
+  left: 0;
   position: relative;
   align-self: center;
   margin: 0 1em;
-}
-
-.answer-options {
-  padding: 0.39em 1em;
-  border-left: 1px solid gray;
-
-}
-
-#next-container {
-  width: 650px;
-  margin: 0.9em 0;
-  font-size: 1.3em;
-  display: block;
-  right: 0;
-  text-align: right;
-}
-
-#next {
-  padding: 0.68em 1em;
-  background-color: #3177d8;
-  color: white;
-  cursor: pointer;
-  border-radius: 10px;
-}
-
-#nextButtonPlaceholder {
-  background-color: #8c8c8c;
-  color: black;
-  cursor: not-allowed;
-  opacity: 0.5;
-  border-radius: 10px;
-  padding: 0.68em 1em;
 }
 
 .correctOption {

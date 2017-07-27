@@ -41,11 +41,15 @@ wordsApi = WordsApi.WordsApi(client)
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+<<<<<<< HEAD
+class WrongWord(ndb.Model):
+=======
 class User(ndb.Model):
     ID = ndb.StringProperty();
     nickname = ndb.StringProperty();
 
 class WordStore(ndb.Model):
+>>>>>>> master
     word = ndb.StringProperty()
     definition = ndb.StringProperty()
 
@@ -60,7 +64,7 @@ class MainHandler(webapp2.RequestHandler):
         template = env.get_template('templates/index.html')
         MainHandler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
                                             includePartOfSpeech = 'noun',
-                                            excludePartOfSpeech = 'proper-noun-plural',
+                                            excludePartOfSpeech = 'noun-plural',
                                             minLength = 3,
                                             maxLength = -1,
                                             minDictionaryCount = 1,
@@ -96,7 +100,11 @@ class MainHandler(webapp2.RequestHandler):
         if not selectionToCompare:
             self.processAnswer()
             return
+<<<<<<< HEAD
+        if selectionToCompare == MainHandler.definitionOfDisplayedWord:
+=======
         if selectionToCompare == MainHandler.definitionOfDisplayedWord.strip():
+>>>>>>> master
             response = "True"
         else:
             response = "False"
@@ -116,7 +124,11 @@ class MainHandler(webapp2.RequestHandler):
             MainHandler.score += 1
         else:
             MainHandler.incorrectWord = MainHandler.displayedWord
+<<<<<<< HEAD
+            wrongword = WrongWord(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
+=======
             wrongword = WordStore(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
+>>>>>>> master
             key = wrongword.put()
 
         newscore = {"newscore": MainHandler.score}
@@ -126,7 +138,7 @@ class MainHandler(webapp2.RequestHandler):
 
 class WrongHandler(webapp2.RequestHandler):
     def get(self):
-        template = env.get_template('templates/saved.html')
+        template = env.get_template('templates/wrong.html')
         self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
