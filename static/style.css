@@ -8,11 +8,14 @@ body {
   z-index: 0;
 }
 
+<<<<<<< HEAD
+=======
 h1{
   text-align: center;
   font-family: "Roboto", serif;
 }
 
+>>>>>>> b659a27a2bfa0c9fd6a09a4d9eafdc3eb9e4a7c9
 a {
   color: black;
 }
@@ -46,7 +49,7 @@ a:hover {
 .dropdown-content {
     float: left;
     padding: 0.6em 1.36em 0.6em 1.1em;
-    background-color: rgba(59, 178, 53, 0.8);
+    background-color: rgba(59, 178, 53, 0.7);
     top: 55px;
     clear: both;
     z-index: 100;
