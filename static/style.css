@@ -160,10 +160,22 @@ a:hover {
 
 #my-signin2 {
   float: right;
-  font-size: 1.25em;
-  /*padding: 0.78em 2em;*/
+/*  padding: 0.78em 2em;*/
   margin: 0;
-  /*background-color: #24b41d; */
+  /*background-color: #24b41d;*/
+  /*position: absolute;*/
+  cursor: pointer;
+  font-family: "Roboto", serif;
+  opacity: 0.78;
+  box-shadow: none;
+}
+
+#signOut {
+  float: right;
+  font-size: 1.25em;
+  padding: 0.78em 2em;
+  margin: 0;
+  background-color: #24b41d;
   color: #FFF;
   /*position: absolute;*/
   cursor: pointer;
