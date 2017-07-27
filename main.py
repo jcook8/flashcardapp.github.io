@@ -24,6 +24,7 @@ import urllib2
 import codecs
 from wordnik import *
 from random import randint
+from google.appengine.ext import ndb
 
 
 apiUrl = 'http://api.wordnik.com/v4'
@@ -39,6 +40,10 @@ wordsApi = WordsApi.WordsApi(client)
 
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+
+class WordStore(ndb.Model):
+    word = ndb.StringProperty()
+    definition = ndb.StringProperty()
 
 class MainHandler(webapp2.RequestHandler):
     definitionOfDisplayedWord = None
@@ -93,29 +98,13 @@ class SavedHandler(webapp2.RequestHandler):
         template = env.get_template('templates/saved.html')
         self.response.out.write(template.render())
 
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        template = env.get_template('templates/saved.html')
-        randomWord = wordsApi.getRandomWord(hasDictionaryDef = True,
-                                            minLength = 3,
-                                            maxLength = 5,
-                                            minDictionaryCount = 1,
-                                            maxDictionaryCount = -1,
-                                            minCorpusCount = 0,
-                                            maxCorpusCount = -1)
-        definitions = wordApi.getDefinitions(randomWord.word,
-                                           sourceDictionaries = 'all',
-                                           limit = 1)
-        self.response.out.write(randomWord.word + ": " + definitions[0].text)
-         # i = 0
-        #randomDef = wordApi.getDefinitions(randomWords[1].text, limit = 1)
-        #  i += 1
-        #main_var = {"word": } #, "def1": randomDef[1].text}
-
 class Test2Handler(webapp2.RequestHandler):
     definitionOfDisplayedWord = None
     testvar = None
     randomWords = None
+    displayedWord = None
+    incorrectWord = None
+    score = 0
     def get(self):
         template = env.get_template('templates/test.html')
         Test2Handler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
@@ -137,25 +126,21 @@ class Test2Handler(webapp2.RequestHandler):
           array.append(definitions[0].text)
         #wordrandom = randomWords[i].text
         Test2Handler.definitionOfDisplayedWord = array[i]
+        Test2Handler.displayedWord = Test2Handler.randomWords[i].word
 
-        unicodeRandomWord = unicode(Test2Handler.randomWords[i].word.strip(codecs.BOM_UTF8), 'utf-8')
-        unicodeDef1 = unicode(array[0].strip(codecs.BOM_UTF8), 'utf-8')
-        unicodeDef2 = unicode(array[1].strip(codecs.BOM_UTF8), 'utf-8')
-        unicodeDef3 = unicode(array[2].strip(codecs.BOM_UTF8), 'utf-8')
-        unicodeDef4 = unicode(array[3].strip(codecs.BOM_UTF8), 'utf-8')
-        Test2Handler.testvar = {'word': unicodeRandomWord,
-                    'def1': unicodeDef1,
-                    'def2': unicodeDef2,
-                    'def3': unicodeDef3,
-                    'def4': unicodeDef4}
-        newword = json.dumps(Test2Handler.testvar)
+        testvar = {'word': Test2Handler.randomWords[i].word,
+                    'def1': array[0],
+                    'def2': array[1],
+                    'def3': array[2],
+                    'def4': array[3]}
 
-        self.response.out.write(template.render(Test2Handler.testvar))
+        self.response.out.write(template.render(testvar))
 
     def post(self):
         selectionToCompare = self.request.get("option")
-        print selectionToCompare
-        print Test2Handler.definitionOfDisplayedWord
+        if not selectionToCompare:
+            self.processAnswer()
+            return
         if selectionToCompare.strip() == Test2Handler.definitionOfDisplayedWord.strip():
             response = "True"
         else:
@@ -164,13 +149,22 @@ class Test2Handler(webapp2.RequestHandler):
         return_data = {"answer": response}
         self.response.write(json.dumps(return_data))
 
+    def processAnswer(self):
+        checkAnswer = self.request.get("selection")
+        if checkAnswer == "True":
+            Test2Handler.score += 1
+        else:
+            Test2Handler.incorrectWord = Test2Handler.displayedWord
 
+        newscore = {"newscore": Test2Handler.score}
+        self.response.write(json.dumps(newscore))
 
-
+        wrongword = WordStore(word = Test2Handler.incorrectWord, definition = Test2Handler.definitionOfDisplayedWord)
+        key = wrongword.put()
+        
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/saved', SavedHandler),
-    ('/testing', TestHandler),
     ('/testing2', Test2Handler)
 ], debug=True)

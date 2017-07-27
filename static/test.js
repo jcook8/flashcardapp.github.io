@@ -13,15 +13,21 @@ function sendText(optiontext) {
 function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile){
     console.log(responseFromPyFile);
     console.log(lastClicked);
+    correctness = null;
     if (responseFromPyFile == "True") {
         $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
-    
+        correctness = "True"
+        console.log(correctness)
     } else if (responseFromPyFile == "False"){
         $('#' + lastClicked).addClass('incorrectOption').find('li').css("border-color", "white");
+        correctness = "False"
+        console.log(correctness)
     }
-
-
-
+    $.post("/testing2", {"selection": correctness}, function(data) {
+        console.log(data);
+        //$('#show-score').append(data);
+        window.location = "/testing2";
+    });
 }
 var lastClicked;
 function sendOptionA(){
