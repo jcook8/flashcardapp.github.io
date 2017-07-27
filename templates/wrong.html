@@ -3,33 +3,51 @@
     <title>Flashcard Project</title>
     <link href="resources/wrong.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Fira+Sans+Extra+Condensed|Raleway|Zilla+Slab|Roboto" rel="stylesheet">
+    <meta name="google-signin-client_id" content="245817330168-icg5k952r670a9ltcrq71h6242t489u2.apps.googleusercontent.com">
   </head>
   <body>
     <!-- Apply navigation menu to this -->
     <span class="dropdown-menu">Menu</span>
+    <div id="my-signin2">Sign In</div>
     <!-- Link to home page -->
     <h2 class="title-header"><a href="/">WTF[rick] is That Word?!</a></h2>
+    <a href="#" onclick="signOut();">Sign out</a>
     <nav class="dropdown-content">
-      <h4><a href="/saved">Saved words</a></h4>
-      <h4 id="settings-menu">Settings</h4>
+      <h4><a href="/saved">Incorrected Words</a></h4>
+      <!--<h4 id="settings-menu">Settings</h4>
       <div class="le-settings">
         <h4>Difficulty</h4>
         <span>Elementary</span><br>
         <span>Intermediate</span><br>
         <span>Arduous</span>
         <h4>Color</h4>
-      </div>
+      </div>-->
     </nav>
+<<<<<<< HEAD:templates/saved.html
+    <h1>Incorrected Words</h1>
+  <ol type="1">
+    <div class="saved-words">
+      {{ word }}
+    </div>
+  </ol>
+
+=======
 
     <div class="wrong-words">
       {{ words }}
     </div>
+>>>>>>> origin/JessesChanges:templates/wrong.html
     <div class="flashcard-container" align="center">
       <div class="flashcard">
           <span id="word">Text</span>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<<<<<<< HEAD
     <script src="resources/wrongwords.js"></script>
+=======
+    <script src="resources/savedwords.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+>>>>>>> master
   </body>
 </html>

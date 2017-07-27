@@ -41,7 +41,15 @@ wordsApi = WordsApi.WordsApi(client)
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+<<<<<<< HEAD
 class WrongWord(ndb.Model):
+=======
+class User(ndb.Model):
+    ID = ndb.StringProperty();
+    nickname = ndb.StringProperty();
+
+class WordStore(ndb.Model):
+>>>>>>> master
     word = ndb.StringProperty()
     definition = ndb.StringProperty()
 
@@ -85,11 +93,18 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(main_var))
 
     def post(self):
+        userIDToken = self.request.get("ID")
+        nickName = self.request.get("nick")
+        self.sendUser(userIDToken, nickName)
         selectionToCompare = self.request.get("option")
         if not selectionToCompare:
             self.processAnswer()
             return
+<<<<<<< HEAD
         if selectionToCompare == MainHandler.definitionOfDisplayedWord:
+=======
+        if selectionToCompare == MainHandler.definitionOfDisplayedWord.strip():
+>>>>>>> master
             response = "True"
         else:
             response = "False"
@@ -97,13 +112,23 @@ class MainHandler(webapp2.RequestHandler):
         return_data = {"answer": response}
         self.response.write(json.dumps(return_data))
 
+    def sendUser(self, token, name):
+        print token
+        print name
+        user = User(ID = token, nickname = name)
+        user.put()
+
     def processAnswer(self):
         checkAnswer = self.request.get("selection")
         if checkAnswer == "True":
             MainHandler.score += 1
         else:
             MainHandler.incorrectWord = MainHandler.displayedWord
+<<<<<<< HEAD
             wrongword = WrongWord(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
+=======
+            wrongword = WordStore(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
+>>>>>>> master
             key = wrongword.put()
 
         newscore = {"newscore": MainHandler.score}
