@@ -21,6 +21,7 @@ import json
 import logging
 import webapp2
 import urllib2
+import codecs
 from wordnik import *
 from random import randint
 
@@ -40,11 +41,15 @@ wordsApi = WordsApi.WordsApi(client)
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class MainHandler(webapp2.RequestHandler):
+    definitionOfDisplayedWord = None
+
     def get(self):
         template = env.get_template('templates/index.html')
         randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
+                                            includePartOfSpeech = 'noun',
+                                            excludePartOfSpeech = 'proper-noun-plural',
                                             minLength = 3,
-                                            maxLength = 5,
+                                            maxLength = -1,
                                             minDictionaryCount = 1,
                                             maxDictionaryCount = -1,
                                             minCorpusCount = 0,
@@ -53,16 +58,35 @@ class MainHandler(webapp2.RequestHandler):
         i = randint(0, 3)
         array = []
         for randomword in randomWords:
-          randomDef = wordApi.getDefinitions(randomword.word,
+          definitions = wordApi.getDefinitions(randomword.word,
                                              sourceDictionaries = 'all',
                                              limit = 1)
-          array.append(randomDef[0].text)
-        mainvar = {'word': randomWords[i].word,
+          array.append(definitions[0].text)
+
+        #wordrandom = randomWords[i].text
+        MainHandler.definitionOfDisplayedWord = array[i]
+
+
+        main_var = {'word': randomWords[i].word,
                     'def1': array[0],
                     'def2': array[1],
                     'def3': array[2],
                     'def4': array[3]}
-        self.response.out.write(template.render(mainvar))
+        #main_var_json = json.dumps(main_var)
+        #newwords = {'json_newwords': main_var_json}
+        self.response.out.write(template.render(main_var))
+
+    def post(self):
+        selectionToCompare = self.request.get("option")
+        print selectionToCompare
+        print MainHandler.definitionOfDisplayedWord
+        if selectionToCompare.strip() == MainHandler.definitionOfDisplayedWord.strip():
+            response = "True"
+        else:
+            response = "False"
+
+        return_data = {"answer": response}
+        self.response.write(json.dumps(return_data))
 
 class SavedHandler(webapp2.RequestHandler):
     def get(self):
@@ -89,11 +113,16 @@ class TestHandler(webapp2.RequestHandler):
         #main_var = {"word": } #, "def1": randomDef[1].text}
 
 class Test2Handler(webapp2.RequestHandler):
+    definitionOfDisplayedWord = None
+    testvar = None
+    randomWords = None
     def get(self):
-        template = env.get_template('templates/index.html')
-        randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
+        template = env.get_template('templates/test.html')
+        Test2Handler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
+                                            includePartOfSpeech = 'noun',
+                                            excludePartOfSpeech = 'proper-noun-plural',
                                             minLength = 3,
-                                            maxLength = 5,
+                                            maxLength = -1,
                                             minDictionaryCount = 1,
                                             maxDictionaryCount = -1,
                                             minCorpusCount = 0,
@@ -101,18 +130,41 @@ class Test2Handler(webapp2.RequestHandler):
                                             limit = 4)
         i = randint(0, 3)
         array = []
-        for randomword in randomWords:
-          randomDef = wordApi.getDefinitions(randomword.word,
+        for randomword in Test2Handler.randomWords:
+          definitions = wordApi.getDefinitions(randomword.word,
                                              sourceDictionaries = 'all',
                                              limit = 1)
-          array.append(randomDef[0].text)
-        mainvar = {'word': randomWords[i].word,
-                    'def1': array[0],
-                    'def2': array[1],
-                    'def3': array[2],
-                    'def4': array[3]}
-        self.response.out.write(json.dumps(mainvar))
-        self.response.out.write(template.render(mainvar))
+          array.append(definitions[0].text)
+        #wordrandom = randomWords[i].text
+        Test2Handler.definitionOfDisplayedWord = array[i]
+
+        unicodeRandomWord = unicode(Test2Handler.randomWords[i].word.strip(codecs.BOM_UTF8), 'utf-8')
+        unicodeDef1 = unicode(array[0].strip(codecs.BOM_UTF8), 'utf-8')
+        unicodeDef2 = unicode(array[1].strip(codecs.BOM_UTF8), 'utf-8')
+        unicodeDef3 = unicode(array[2].strip(codecs.BOM_UTF8), 'utf-8')
+        unicodeDef4 = unicode(array[3].strip(codecs.BOM_UTF8), 'utf-8')
+        Test2Handler.testvar = {'word': unicodeRandomWord,
+                    'def1': unicodeDef1,
+                    'def2': unicodeDef2,
+                    'def3': unicodeDef3,
+                    'def4': unicodeDef4}
+        newword = json.dumps(Test2Handler.testvar)
+
+        self.response.out.write(template.render(Test2Handler.testvar))
+
+    def post(self):
+        selectionToCompare = self.request.get("option")
+        print selectionToCompare
+        print Test2Handler.definitionOfDisplayedWord
+        if selectionToCompare.strip() == Test2Handler.definitionOfDisplayedWord.strip():
+            response = "True"
+        else:
+            response = "False"
+
+        return_data = {"answer": response}
+        self.response.write(json.dumps(return_data))
+
+
 
 
 
