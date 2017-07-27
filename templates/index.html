@@ -3,12 +3,15 @@
     <title>Flashcard Project</title>
     <link href="resources/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Fira+Sans+Extra+Condensed|Raleway|Zilla+Slab|Roboto" rel="stylesheet">
+    <meta name="google-signin-client_id" content="245817330168-icg5k952r670a9ltcrq71h6242t489u2.apps.googleusercontent.com">
   </head>
   <body>
     <!-- Apply navigation menu to this -->
     <span class="dropdown-menu">Menu</span>
+    <div id="my-signin2">Sign In</div>
     <!-- Link to home page -->
     <h2 class="title-header"><a href="/">WTF[rick] is That Word?!</a></h2>
+    <a href="#" onclick="signOut();">Sign out</a>
     <nav class="dropdown-content">
       <h4><a href="/saved">Saved words</a></h4>
       <h4 id="settings-menu">Settings</h4>
@@ -38,5 +41,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="resources/script.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
   </body>
 </html>

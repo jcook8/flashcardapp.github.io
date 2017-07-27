@@ -158,6 +158,19 @@ a:hover {
   font-family: Roboto, serif;
 }
 
+#my-signin2 {
+  float: right;
+  font-size: 1.25em;
+  /*padding: 0.78em 2em;*/
+  margin: 0;
+  /*background-color: #24b41d; */
+  color: #FFF;
+  /*position: absolute;*/
+  cursor: pointer;
+  font-family: "Roboto", serif;
+  opacity: 0.78;
+}
+
 .options-container {
   background-color: #e5e5e5;
   width: 650px;
