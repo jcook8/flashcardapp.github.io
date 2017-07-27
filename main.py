@@ -36,28 +36,14 @@ wordsApi = WordsApi.WordsApi(client)
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-<<<<<<< HEAD
-class WrongWord(ndb.Model):
-    word = ndb.StringProperty();
-    definition = ndb.StringProperty();
-=======
-
 class WrongWord(ndb.Model):
     word = ndb.StringProperty()
     definition = ndb.StringProperty()
 
->>>>>>> 39ec7e37565c2c74a3b5c52e5608d31e6b73cb5e
 class User(ndb.Model):
     ID = ndb.StringProperty();
     nickname = ndb.StringProperty();
 
-<<<<<<< HEAD
-class WordStore(ndb.Model):
-    word = ndb.StringProperty()
-    definition = ndb.StringProperty()
-
-=======
->>>>>>> 39ec7e37565c2c74a3b5c52e5608d31e6b73cb5e
 class MainHandler(webapp2.RequestHandler):
     definitionOfDisplayedWord = None
     main_var = None
@@ -126,16 +112,10 @@ class MainHandler(webapp2.RequestHandler):
         else:
             MainHandler.incorrectWord = MainHandler.displayedWord
             wrongword = WrongWord(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
-<<<<<<< HEAD
-=======
-
->>>>>>> 39ec7e37565c2c74a3b5c52e5608d31e6b73cb5e
             key = wrongword.put()
 
         newscore = {"newscore": MainHandler.score}
         self.response.write(json.dumps(newscore))
-
-
 
 class WrongHandler(webapp2.RequestHandler):
     def get(self):
