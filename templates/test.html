@@ -8,7 +8,7 @@
     <!-- Apply navigation menu to this -->
     <span class="dropdown-menu">Menu</span>
     <!-- Link to home page -->
-    <h2 class="title-header"><a href="/">WTF[rick] is That Word?!</a></h2>
+    <h2 class="title-header"><a href="/">Test Page</a></h2>
     <nav class="dropdown-content">
       <h4><a href="/saved">Saved words</a></h4>
       <h4 id="settings-menu">Settings</h4>
@@ -20,18 +20,24 @@
         <h4>Color</h4>
       </div>
     </nav>
-
-    <div class="saved-words">
-      {{ word }}
-    </div>
-
-
     <div class="flashcard-container" align="center">
       <div class="flashcard">
-          <span id="word">Text</span>
+          <span id="word"> {{ word }} </span>
+      </div>
+      <div id="start-button-container">
+        <span id="start-button">Begin!</span>
+      </div>
+      <div>
+        <ul id="answer-options-list">
+          <div class="options-container" id="optionA"><span class="optionletters">A</span><li class="answer-options" id="option-one"> {{ def1 }}</li></div>
+          <div class="options-container" id="optionB"><span class="optionletters">B</span><li class="answer-options" id="option-two">{{ def2 }}</li></div>
+          <div class="options-container" id="optionC"><span class="optionletters">C</span><li class="answer-options" id="option-three">{{ def3 }}</li></div>
+          <div class="options-container" id="optionD"><span class="optionletters">D</span><li class="answer-options" id="option-four">{{ def4 }}</li></div>
+        </ul>
       </div>
     </div>
+    <p id="test-p"></p>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-    <script src="resources/savedwords.js"></script>
+    <script src="resources/test2.js"></script>
   </body>
 </html>

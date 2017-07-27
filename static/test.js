@@ -5,7 +5,7 @@ $('#settings-menu').click( function (){ $('.le-settings').slideToggle(400) });
 
 function sendText(optiontext) {
   console.log(optiontext);
-  $.post("/", {"option": optiontext}, function(data) {
+  $.post("/testing2", {"option": optiontext}, function(data) {
     declareWhetherAnswerIsCorrectOrNotThenAddNextButton(JSON.parse(data).answer)
   });
 }
@@ -14,12 +14,14 @@ function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile)
     console.log(responseFromPyFile);
     console.log(lastClicked);
     if (responseFromPyFile == "True") {
-      $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
-  
+        $('#' + lastClicked).addClass('correctOption').find('li').css("border-color", "white");
+    
     } else if (responseFromPyFile == "False"){
-      $('#' + lastClicked).addClass('incorrectOption').find('li').css("border-color", "white");
-
+        $('#' + lastClicked).addClass('incorrectOption').find('li').css("border-color", "white");
     }
+
+
+
 }
 var lastClicked;
 function sendOptionA(){

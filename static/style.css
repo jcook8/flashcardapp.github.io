@@ -8,6 +8,23 @@ body {
   z-index: 0;
 }
 
+a {
+  color: black;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
@@ -77,7 +94,8 @@ body {
 #word {
   position: absolute;
   margin: 0;
-  font-size: 9.375em;
+  font-size: 16px;
+  font-size: 7vw;
   font-family: "Raleway", serif;
   opacity: 0.5;
 
@@ -149,6 +167,7 @@ body {
   overflow-wrap: break-word;
   border-radius: 10px;
   display: flex;
+  cursor: pointer;
 }
 
 .optionletters {
@@ -161,4 +180,17 @@ body {
 .answer-options {
   padding: 0.39em 1em;
   border-left: 1px solid gray;
+  text-align: left;
+}
+
+.correctOption {
+  background-color: rgba(96, 198, 93, 0.67);
+  border: 3px solid rgba(96, 198, 93, 0.97);
+  color: white;
+}
+
+.incorrectOption {
+  background-color: rgba(204, 51, 66, 0.63);
+  border: 3px solid rgba(204, 51, 66, 0.94);
+  color: white;
 }
