@@ -73,6 +73,19 @@ function setupHandlersWhenYouChooseAnAnswer(){
 
 $(document).ready(setupHandlersWhenYouChooseAnAnswer);
 
+$.post("/wrong", {"getresponse": "True"}, function(data){
+    printOutEachWord(JSON.parse(data).incorrect);
+
+});
+
+function printOutEachWord(words){
+  $('#wrong-words-page-header').text("You Got These Words Wrong lol");
+  for (var i = 0; i < words.length; i++){
+    currentWord = words[i]
+    $('<div class = "incorrect-word-listing"><span class = "incorrect-word">' + currentWord + "</span></div>").appendTo('#wrong-words-list-container');
+  }
+}
+
 $('#signOut').hide();
 
 function showSignOutButton(){

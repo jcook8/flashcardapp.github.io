@@ -25,7 +25,7 @@ import codecs
 from wordnik import *
 from random import randint
 from google.appengine.ext import ndb
-from wrongword import WrongWords
+
 
 
 apiUrl = 'http://api.wordnik.com/v4'
@@ -154,9 +154,10 @@ class WrongHandler(webapp2.RequestHandler):
         self.response.out.write(template.render())
 
     def post(self):
-        somePostFromJS = self.request.get("getresponse")
         words_query = WrongWord.query()
         word_data = words_query.get()
+        somePostFromJS = self.request.get("getresponse")
+
         if word_data == None:
             self.response.out.write("No words to display.")
         else:

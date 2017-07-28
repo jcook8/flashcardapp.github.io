@@ -104,7 +104,6 @@ a:hover {
   opacity: 0.5;
 }
 
-
 #start-button-container {
   position: relative;
   margin: 1.5em 0;
@@ -133,10 +132,7 @@ a:hover {
 
 #my-signin2 {
   float: right;
-/*  padding: 0.78em 2em;*/
   margin: 0;
-  /*background-color: #24b41d;*/
-  /*position: absolute;*/
   cursor: pointer;
   font-family: "Roboto", serif;
   opacity: 0.78;
@@ -150,15 +146,25 @@ a:hover {
   margin: 0;
   background-color: #24b41d;
   color: #FFF;
-  /*position: absolute;*/
   cursor: pointer;
   font-family: "Roboto", serif;
   opacity: 0.78;
 }
 
+#score {
+  float: right;
+  clear: right;
+  font-family: 'Raleway', serif;
+  font-size: 1.3em;
+  margin: 0.5em 1.2em;
+}
+
 .options-container {
-  background-color: #e5e5e5;
   width: 650px;
+}
+
+.options-container, .incorrect-word-listing {
+  background-color: #e5e5e5;
   margin: 5px 0;
   padding: 0.39em 0;
   font-size: 1.3em;
@@ -169,13 +175,13 @@ a:hover {
   text-align: left;
 }
 
-#score {
-  float: right;
-  clear: right;
-  font-family: 'Raleway', serif;
-  font-size: 1.3em;
-  margin: 0.5em 1.2em;
+.incorrect-word {
+  padding: 0 1em;
+}
 
+#wrong-words-list-container {
+  font-family: 'Raleway', serif;
+  margin: 0 1.7em;
 }
 
 .optionletters {
@@ -187,7 +193,6 @@ a:hover {
 .answer-options {
   padding: 0.39em 1em;
   border-left: 1px solid gray;
-
 }
 
 #next-container {
@@ -231,9 +236,4 @@ a:hover {
 #wrong-words-page-header {
   font-family: 'Raleway', serif;
   margin: 0.7em;
-}
-
-#wrong-words-list-container {
-  font-family: 'Raleway', serif;
-  margin: 0 1.7em;
 }
