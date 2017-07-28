@@ -8,6 +8,7 @@ function sendText(optiontext) {
   });
 }
 $('#next').hide()
+$('#redo-wrong').hide()
 function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile){
 
     console.log(responseFromPyFile);
@@ -24,15 +25,41 @@ function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile)
         console.log(correctness)
     }
     $.post("/", {"selection": correctness}, function(data) {
-        console.log(data);
+        parsedscore = JSON.parse(data)
+        console.log(parsedscore.scorekeep);
         $('#scoreNum').text(JSON.parse(data).newscore);
+        testNumberOfNexts(parsedscore.scorekeep, parsedscore.newscore, 5);
     });
     $('.options-container').css("pointer-events", "none");
     $('#nextButtonPlaceholder').hide()
     $('#next').show()
     $('#next').click( function (){
-      window.location.assign("/")
+        window.location.assign("/")
     });
+}
+
+function defineTheTwoButtonsAndShowThem (){
+  $('#redo-wrong').fadeIn(300);
+  $('#redo').click( function(){
+    window.location.assign("/")
+
+  });
+  $('#wrong').click( function(){
+    window.location.assign("/wrong")
+  });
+}
+
+function testNumberOfNexts(scoreKeep, score, numRounds){
+  if (scoreKeep.length == numRounds){
+    $('#next').hide()
+    setTimeout( function (){
+      $('#for-show-and-hide').hide()
+      $('#word').text("Your score was " + score + " out of " + numRounds + ".").css("font-size", "4vw")},
+      2000);
+    setTimeout( function(){
+      defineTheTwoButtonsAndShowThem()
+    }, 3000);
+  }
 }
 
 var lastClicked;
@@ -74,16 +101,36 @@ function setupHandlersWhenYouChooseAnAnswer(){
 $(document).ready(setupHandlersWhenYouChooseAnAnswer);
 
 $.post("/wrong", {"getresponse": "True"}, function(data){
-    printOutEachWord(JSON.parse(data).incorrect);
-
+    parsedterms = JSON.parse(data)
+    printOutEachWord(parsedterms.incorrectword);
+    getDefinitionOnClick(parsedterms.incorrectdef);
 });
 
+function detectIfIncorrectWordsExistOnPage (){
+  if ( $('div.incorrect-word-listing').length){
+    $('#wrong-words-page-header').text("You Got These Words Wrong lol");
+  } else {
+    $('#wrong-words-page-header').text("No Incorrect Words to Display");
+  }
+}
+
+detectIfIncorrectWordsExistOnPage();
+
 function printOutEachWord(words){
-  $('#wrong-words-page-header').text("You Got These Words Wrong lol");
   for (var i = 0; i < words.length; i++){
     currentWord = words[i]
     $('<div class = "incorrect-word-listing"><span class = "incorrect-word">' + currentWord + "</span></div>").appendTo('#wrong-words-list-container');
+    detectIfIncorrectWordsExistOnPage();
   }
+}
+
+function getDefinitionOnClick(definitions){
+  $('.incorrect-word-listing').click( function(){
+    var i = $('.incorrect-word-listing').index(this);
+    currentDef = definitions[i]
+    $('#wrong-defs-list-container').text(currentDef);
+    console.log(i)
+  });
 }
 
 $('#signOut').hide();

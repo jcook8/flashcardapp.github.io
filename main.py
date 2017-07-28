@@ -39,7 +39,10 @@ env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__
 
 class WrongWord(ndb.Model):
     words = ndb.StringProperty(repeated = True)
-    #definition = ndb.StringProperty()
+
+
+class WrongDef(ndb.Model):
+    definitions = ndb.StringProperty(repeated = True)
 
 class User(ndb.Model):
     IDs = ndb.StringProperty();
@@ -53,7 +56,7 @@ class MainHandler(webapp2.RequestHandler):
     incorrectWord = None
     score = 0
     key = None
-
+    scoreKeep = []
     def get(self):
         template = env.get_template('templates/index.html')
         MainHandler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
@@ -123,15 +126,18 @@ class MainHandler(webapp2.RequestHandler):
         print checkAnswer
         if checkAnswer == "True":
             MainHandler.score += 1
-            newscore = {"newscore": MainHandler.score}
+            MainHandler.scoreKeep.append(MainHandler.score)
+            newscore = {"newscore": MainHandler.score,
+                        "scorekeep": MainHandler.scoreKeep}
             self.response.write(json.dumps(newscore))
         elif checkAnswer == "False":
             MainHandler.score += 0
-            newscore = {"newscore": MainHandler.score}
+            MainHandler.scoreKeep.append(MainHandler.score)
+            newscore = {"newscore": MainHandler.score,
+                        "scorekeep": MainHandler.scoreKeep}
             self.response.write(json.dumps(newscore))
             self.wordsAsHTML(MainHandler.displayedWord)
-
-
+            self.definitionsAsHTML(MainHandler.definitionOfDisplayedWord)
 
     def wordsAsHTML(self, new_word):
         words_query = WrongWord.query()
@@ -148,6 +154,21 @@ class MainHandler(webapp2.RequestHandler):
                 word_data.words.append(new_word)
                 word_data.put()
 
+    def definitionsAsHTML(self, new_definition):
+        definitions_query = WrongDef.query()
+        definition_data = definitions_query.get()
+        if definition_data == None:
+            if new_definition == None:
+                return
+            else:
+                definitions_list = [ new_definition ]
+                definition_data = WrongDef(definitions = definitions_list)
+                definition_data.put()
+        else:
+            if new_definition != None:
+                definition_data.definitions.append(new_definition)
+                definition_data.put()
+
 class WrongHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/wrong.html')
@@ -156,14 +177,17 @@ class WrongHandler(webapp2.RequestHandler):
     def post(self):
         words_query = WrongWord.query()
         word_data = words_query.get()
+        define_query = WrongDef.query()
+        define_data = define_query.get()
         somePostFromJS = self.request.get("getresponse")
 
-        if word_data == None:
+        if word_data == None and define_data == None:
             self.response.out.write("No words to display.")
         else:
             if somePostFromJS == "True":
-                incorrectWords = {"incorrect": word_data.words}
-                self.response.write(json.dumps(incorrectWords))
+                incorrectVar = {"incorrectword": word_data.words,
+                                "incorrectdef": define_data.definitions}
+                self.response.write(json.dumps(incorrectVar))
             else:
                 return False
 

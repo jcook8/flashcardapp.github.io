@@ -107,7 +107,6 @@ a:hover {
 #start-button-container {
   position: relative;
   margin: 1.5em 0;
-  display: none;
 }
 
 #start-button{
@@ -184,6 +183,12 @@ a:hover {
   margin: 0 1.7em;
 }
 
+#wrong-defs-list-container{
+  font-family: 'Raleway', serif;
+  margin: 1.5em 1.7em;
+  font-size: 1.4em;
+}
+
 .optionletters {
   position: relative;
   align-self: center;
@@ -195,21 +200,33 @@ a:hover {
   border-left: 1px solid gray;
 }
 
-#next-container {
+.smallbutton-container {
   width: 650px;
   margin: 0.9em 0;
   font-size: 1.3em;
   display: block;
-  right: 0;
   text-align: right;
 }
 
-#next {
+#redo-wrong {
+  text-align: center;
+}
+
+.smallbutton {
   padding: 0.68em 1em;
   background-color: #3177d8;
   color: white;
   cursor: pointer;
   border-radius: 10px;
+  font-family: 'Roboto', serif;
+}
+
+#wrong {
+  margin-left: 2.5px;
+}
+
+#redo {
+  margin-right: 2.5px;
 }
 
 #nextButtonPlaceholder {
