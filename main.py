@@ -42,7 +42,7 @@ class WrongWord(ndb.Model):
     #definition = ndb.StringProperty()
 
 class User(ndb.Model):
-    ID = ndb.StringProperty();
+    IDs = ndb.StringProperty();
     nickname = ndb.StringProperty();
 
 class MainHandler(webapp2.RequestHandler):
@@ -87,7 +87,7 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(main_var))
 
     def post(self):
-        userIDToken = self.request.get("ID")
+        userIDToken = self.request.get("IDs")
         nickName = self.request.get("nick")
         self.sendUser(userIDToken, nickName)
         selectionToCompare = self.request.get("option")
@@ -105,8 +105,15 @@ class MainHandler(webapp2.RequestHandler):
     def sendUser(self, token, name):
         print token
         print name
-        user = User(ID = token, nickname = name)
-        user.put()
+        userQuery = User.query(User.IDs == token) #Finds All ID's of same token
+        testIDs = userQuery.fetch() #Puts them in a list
+        print len(testIDs) #Find the length of the list
+        if len(testIDs) > 0 : #Make sure theres only one element of this ID in a list
+            return #Returns if there is more than one
+        else: #Otherwise, send the info to the server
+            user = User(IDs = token, nickname = name)
+            user.put()
+            print token
 
     def processAnswer(self):
         checkAnswer = self.request.get("selection")
