@@ -103,7 +103,7 @@ $(document).ready(setupHandlersWhenYouChooseAnAnswer);
 $.post("/wrong", {"getresponse": "True"}, function(data){
     parsedterms = JSON.parse(data)
     printOutEachWord(parsedterms.incorrectword);
-    getDefinitionOnClick(parsedterms.incorrectdef);
+    getDefinitionOnClick(parsedterms.incorrectword, parsedterms.incorrectdef);
 });
 
 function detectIfIncorrectWordsExistOnPage (){
@@ -124,7 +124,7 @@ function printOutEachWord(words){
   }
 }
 
-function getDefinitionOnClick(definitions){
+function getDefinitionOnClick(word, definitions){
   $('.incorrect-word-listing').click( function(){
     var i = $('.incorrect-word-listing').index(this);
     currentDef = definitions[i]
