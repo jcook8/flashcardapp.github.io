@@ -39,14 +39,15 @@ env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__
 
 class WrongWord(ndb.Model):
     words = ndb.StringProperty(repeated = True)
-
+    IDs = ndb.StringProperty()
 
 class WrongDef(ndb.Model):
     definitions = ndb.StringProperty(repeated = True)
+    IDs = ndb.StringProperty()
 
 class User(ndb.Model):
-    IDs = ndb.StringProperty();
-    nickname = ndb.StringProperty();
+    IDs = ndb.StringProperty()
+    nickname = ndb.StringProperty()
 
 class MainHandler(webapp2.RequestHandler):
     definitionOfDisplayedWord = None
@@ -57,6 +58,7 @@ class MainHandler(webapp2.RequestHandler):
     score = 0
     key = None
     scoreKeep = []
+    currentUserIDToken = None
     def get(self):
         template = env.get_template('templates/index.html')
         MainHandler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
@@ -79,6 +81,7 @@ class MainHandler(webapp2.RequestHandler):
         #wordrandom = randomWords[i].text
         MainHandler.definitionOfDisplayedWord = array[i]
         MainHandler.displayedWord = MainHandler.randomWords[i].word
+        MainHandler.currentUserIDToken = None
 
         main_var = {'word': MainHandler.randomWords[i].word,
                     'def1': array[0],
@@ -93,6 +96,9 @@ class MainHandler(webapp2.RequestHandler):
         selectionToCompare = self.request.get("option")
         userIDToken = self.request.get("IDs")
         nickName = self.request.get("nick")
+        checkSignOut = self.request.get("userSignedOut")
+        print userIDToken
+        print nickName
 
         if selectionToCompare:
             if selectionToCompare.strip() == MainHandler.definitionOfDisplayedWord:
@@ -101,16 +107,21 @@ class MainHandler(webapp2.RequestHandler):
                 response = "False"
             return_data = {"answer": response}
             self.response.write(json.dumps(return_data))
+        elif checkSignOut:
+            self.signOutUser()
+        elif userIDToken and nickName:
+            self.sendUser(userIDToken, nickName)
+        else:
+            self.processAnswer()
 
-        elif not selectionToCompare:
-            if not userIDToken or nickName:
-                self.processAnswer()
-            else:
-                self.sendUser(userIDToken, nickName)
+    def signOutUser(self):
+        MainHandler.currentUserIDToken = None
+        self.response.write("Signed out")
 
     def sendUser(self, token, name):
         print token
         print name
+        MainHandler.currentUserIDToken = token
         userQuery = User.query(User.IDs == token) #Finds All ID's of same token
         testIDs = userQuery.fetch() #Puts them in a list
         print len(testIDs) #Find the length of the list
@@ -140,14 +151,14 @@ class MainHandler(webapp2.RequestHandler):
             self.definitionsAsHTML(MainHandler.definitionOfDisplayedWord)
 
     def wordsAsHTML(self, new_word):
-        words_query = WrongWord.query()
+        words_query = WrongWord.query(WrongWord.IDs == MainHandler.currentUserIDToken)
         word_data = words_query.get()
         if word_data == None:
             if new_word == None:
                 return
             else:
                 word_list = [ new_word ]
-                word_data = WrongWord(words = word_list)
+                word_data = WrongWord(words = word_list, IDs = MainHandler.currentUserIDToken)
                 word_data.put()
         else:
             if new_word != None:
@@ -155,14 +166,14 @@ class MainHandler(webapp2.RequestHandler):
                 word_data.put()
 
     def definitionsAsHTML(self, new_definition):
-        definitions_query = WrongDef.query()
+        definitions_query = WrongDef.query(WrongWord.IDs == MainHandler.currentUserIDToken)
         definition_data = definitions_query.get()
         if definition_data == None:
             if new_definition == None:
                 return
             else:
                 definitions_list = [ new_definition ]
-                definition_data = WrongDef(definitions = definitions_list)
+                definition_data = WrongDef(definitions = definitions_list, IDs = MainHandler.currentUserIDToken)
                 definition_data.put()
         else:
             if new_definition != None:
@@ -175,9 +186,9 @@ class WrongHandler(webapp2.RequestHandler):
         self.response.out.write(template.render())
 
     def post(self):
-        words_query = WrongWord.query()
+        words_query = WrongWord.query(WrongWord.IDs == MainHandler.currentUserIDToken)
         word_data = words_query.get()
-        define_query = WrongDef.query()
+        define_query = WrongDef.query(WrongWord.IDs == MainHandler.currentUserIDToken)
         define_data = define_query.get()
         somePostFromJS = self.request.get("getresponse")
 

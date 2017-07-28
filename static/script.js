@@ -96,62 +96,10 @@ function setupHandlersWhenYouChooseAnAnswer(){
     lastClicked = $(this).attr('id');
     sendOptionD();
   });
+  $('#signOut').hide();
 }
 
 $(document).ready(setupHandlersWhenYouChooseAnAnswer);
-
-$.post("/wrong", {"getresponse": "True"}, function(data){
-    parsedterms = JSON.parse(data)
-    printOutEachWord(parsedterms.incorrectword);
-    getDefinitionOnClick(parsedterms.incorrectword, parsedterms.incorrectdef);
-});
-
-function detectIfIncorrectWordsExistOnPage (){
-  if ( $('div.incorrect-word-listing').length){
-    $('#wrong-words-page-header').text("You Got These Words Wrong lol");
-  } else {
-    $('#wrong-words-page-header').text("No Incorrect Words to Display");
-  }
-}
-
-detectIfIncorrectWordsExistOnPage();
-
-function printOutEachWord(words){
-  for (var i = 0; i < words.length; i++){
-    currentWord = words[i]
-    $('<div class = "incorrect-word-listing"><span class = "incorrect-word">' + currentWord + "</span></div>").appendTo('#wrong-words-list-container');
-    detectIfIncorrectWordsExistOnPage();
-  }
-}
-
-function getDefinitionOnClick(word, definitions){
-  $('.incorrect-word-listing').click( function(){
-     var i = $('.incorrect-word-listing').index(this);
-     currentDef = definitions[i]
-     currentWord = word[i]
-     $('#myModal').css("display", "flex");
-     $('#modal-word').text(currentWord);
-     $('#modal-def').text(currentDef);
-     $('.incorrect-word-listing').css("pointer-events", "none");
-  });
-}
-
-$('.close').click( function(){
-  $('#myModal').css("display", "none");
-  $('.incorrect-word-listing').css("pointer-events", "auto");
-});
-
-window.onclick = function (event) {
-    if (event.target == $('.modal')) {
-      $('.modal').css("display", "none");
-    }
-}
-
-$('#signOut').hide();
-
-function showSignOutButton(){
-    $('#signOut').show();
-}
 
 function onSignIn(googleUser) {
   console.log(googleUser);
@@ -165,7 +113,6 @@ function onSignIn(googleUser) {
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   $.post("/", {"IDs": id_token, "nick": nickname}, function(data){
     console.log(data);
-
   });
 }
 function signOut() {
@@ -175,12 +122,16 @@ function signOut() {
   });
   $('#signOut').hide();
   $('#my-signin2').show();
+  $.post("/", {"userSignedOut": "True"}, function(data){
+      console.log(data);
+  });
 }
+
 function onSuccess(googleUser) {
   console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
   onSignIn(googleUser);
   $('#my-signin2').hide();
-  showSignOutButton();
+  $('#signOut').show();
 }
 function onFailure(error) {
   console.log(error);
