@@ -33,7 +33,7 @@ a:hover {
 .dropdown-menu {
     float: left;
     font-size: 1.25em;
-    padding: 0.78em 2em;
+    padding: 0.9em 2em;
     margin: 0;
     background-color: #24b41d;
     color: #FFF;
@@ -47,7 +47,7 @@ a:hover {
     float: left;
     padding: 0.6em 1.36em 0.6em 1.1em;
     background-color: rgba(59, 178, 53, 0.7);
-    top: 55px;
+    top: 60px;
     clear: both;
     z-index: 100;
     position: absolute;
@@ -76,6 +76,11 @@ a:hover {
     vertical-align: middle;
     background-color: rgba(241, 255, 242, 1.0);
     font-family: "Roboto", serif;
+}
+
+.title-header a {
+  margin-left: 6em;
+  font-family: 'Frijole', serif;
 }
 
 .title-header, .dropdown-content {
@@ -141,7 +146,7 @@ a:hover {
 #signOut {
   float: right;
   font-size: 1.25em;
-  padding: 0.78em 2em;
+  padding: 0.9em 2em;
   margin: 0;
   background-color: #24b41d;
   color: #FFF;
@@ -183,7 +188,7 @@ a:hover {
   margin: 0 1.7em;
 }
 
-#wrong-defs-list-container{
+#wrong-defs-list-container {
   font-family: 'Raleway', serif;
   margin: 1.5em 1.7em;
   font-size: 1.4em;
@@ -253,4 +258,72 @@ a:hover {
 #wrong-words-page-header {
   font-family: 'Raleway', serif;
   margin: 0.7em;
+}
+
+/* The Lightbox */
+
+/* The Modal (background) */
+#myModal {
+  display: none;
+  position: absolute;
+  z-index: 3; /* Sit on top */
+  overflow: auto; /* Enable scroll if needed */
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.68);
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.modal {
+    overflow: auto; /* Enable scroll if needed */
+    align-self: center;
+    height: 400px;
+    width: 652px;
+    background-color: #ddd;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+#modal-word {
+  float: left;
+  margin: 0.3em;
+  font-size: 3em;
+  font-family: "Raleway", serif;
+  opacity: 0.5;
+}
+
+#modal-def {
+  float: left;
+  clear: both;
+  font-family: 'Raleway', serif;
+  margin: 0.3em 1.4em;
+  font-size: 1.4em;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    margin-right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
