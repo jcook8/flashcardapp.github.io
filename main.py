@@ -25,6 +25,7 @@ import codecs
 from wordnik import *
 from random import randint
 from google.appengine.ext import ndb
+from wrongword import WrongWords
 
 
 apiUrl = 'http://api.wordnik.com/v4'
@@ -37,8 +38,8 @@ wordsApi = WordsApi.WordsApi(client)
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class WrongWord(ndb.Model):
-    word = ndb.StringProperty()
-    definition = ndb.StringProperty()
+    words = ndb.StringProperty(repeated = True)
+    #definition = ndb.StringProperty()
 
 class User(ndb.Model):
     ID = ndb.StringProperty();
@@ -51,6 +52,8 @@ class MainHandler(webapp2.RequestHandler):
     displayedWord = None
     incorrectWord = None
     score = 0
+    key = None
+
     def get(self):
         template = env.get_template('templates/index.html')
         MainHandler.randomWords = wordsApi.getRandomWords(hasDictionaryDef = True,
@@ -110,17 +113,34 @@ class MainHandler(webapp2.RequestHandler):
         if checkAnswer == "True":
             MainHandler.score += 1
         else:
-            MainHandler.incorrectWord = MainHandler.displayedWord
-            wrongword = WrongWord(word = MainHandler.incorrectWord, definition = MainHandler.definitionOfDisplayedWord)
-            key = wrongword.put()
+            self.wordsAsHTML(MainHandler.displayedWord)
 
         newscore = {"newscore": MainHandler.score}
         self.response.write(json.dumps(newscore))
 
+    def wordsAsHTML(self, new_word):
+        words_query = WrongWord.query()
+        word_data = words_query.get()
+        if word_data == None:
+            if new_word == None:
+                return
+            else:
+                word_list = [ new_word ]
+                word_data = WrongWord(words = word_list)
+                word_data.put()
+        else:
+            if new_word != None:
+                word_data.words.append(new_word)
+                word_data.put()
+
 class WrongHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/wrong.html')
-        self.response.out.write(template.render())
+        words_query = WrongWord.query()
+        word_data = words_query.get()
+        incorrectWords = {"incorrect": word_data.words}
+        self.response.write(json.dumps(incorrectWords))
+        #self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

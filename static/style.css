@@ -227,3 +227,13 @@ a:hover {
   border: 3px solid rgba(204, 51, 66, 0.94);
   color: white;
 }
+
+#wrong-words-page-header {
+  font-family: 'Raleway', serif;
+  margin: 0.7em;
+}
+
+#wrong-words-list-container {
+  font-family: 'Raleway', serif;
+  margin: 0 1.7em;
+}

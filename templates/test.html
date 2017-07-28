@@ -6,27 +6,19 @@
     <meta name="google-signin-client_id" content="245817330168-icg5k952r670a9ltcrq71h6242t489u2.apps.googleusercontent.com">
   </head>
   <body>
-    <!-- Apply navigation menu to this -->
     <span class="dropdown-menu">Menu</span>
     <div id="my-signin2">Sign In</div>
     <a href="/" onclick="signOut();" id="signOut">Sign out</a>
-    <!-- Link to home page -->
     <h2 class="title-header"><a href="/">I Can't Even</a></h2>
     <nav class="dropdown-content">
       <h4><a href="/wrong">Incorrect Words</a></h4>
-      <h4 id="settings-menu">Settings</h4>
       <h4>Color</h4>
     </nav>
-    <h2 id="wrong-words-page-header"> You Got These Words Wrong lol </h2>
-    <div id="wrong-words-list-container">
-      <span> {{ word }} </span><br>
-      <span> {{ definition }} </span>
-    </div>
-  <!-- <div class="flashcard-container" align="center">
-      <div class="flashcard">
-
+    <div class="flashcard-container" align="center">
+      <div>
+        <ul id="answer-options-list"></ul>
       </div>
-    </div> -->
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="resources/wrongword.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
