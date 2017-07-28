@@ -1,29 +1,33 @@
 <html>
   <head>
-    <title>Flashcard Project</title>
+    <title>Word Crash</title>
     <link href="resources/style.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Fira+Sans+Extra+Condensed|Raleway|Zilla+Slab|Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Fira+Sans+Extra+Condensed|Raleway|Zilla+Slab|Roboto|Frijole" rel="stylesheet">
     <meta name="google-signin-client_id" content="245817330168-icg5k952r670a9ltcrq71h6242t489u2.apps.googleusercontent.com">
   </head>
   <body>
     <span class="dropdown-menu">Menu</span>
     <div id="my-signin2">Sign In</div>
     <a href="/" onclick="signOut();" id="signOut">Sign out</a>
-    <h2 class="title-header"><a href="/">I Can't Even</a></h2>
+    <h2 class="title-header"><a href="/">Word Crash</a></h2>
     <nav class="dropdown-content">
       <h4><a href="/wrong">Incorrect Words</a></h4>
       <h4 id="settings-menu">Settings</h4>
       <h4>Color</h4>
     </nav>
+
     <h2 id="wrong-words-page-header"> </h2>
     <div id="wrong-words-list-container"></div>
     <div id="wrong-defs-list-container"></div>
   <!-- I guess you could try using this for the lightbox -->
-  <!-- <div class="flashcard-container" align="center">
-      <div class="flashcard">
-
+    <div id="myModal">
+      <div class="modal">
+        <span class="close">&times;</span>
+        <div id = "modal-word"></div>
+        <div id = "modal-def"></div>
       </div>
-    </div> -->
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="resources/script.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>

@@ -103,7 +103,7 @@ $(document).ready(setupHandlersWhenYouChooseAnAnswer);
 $.post("/wrong", {"getresponse": "True"}, function(data){
     parsedterms = JSON.parse(data)
     printOutEachWord(parsedterms.incorrectword);
-    getDefinitionOnClick(parsedterms.incorrectdef);
+    getDefinitionOnClick(parsedterms.incorrectword, parsedterms.incorrectdef);
 });
 
 function detectIfIncorrectWordsExistOnPage (){
@@ -124,13 +124,27 @@ function printOutEachWord(words){
   }
 }
 
-function getDefinitionOnClick(definitions){
+function getDefinitionOnClick(word, definitions){
   $('.incorrect-word-listing').click( function(){
-    var i = $('.incorrect-word-listing').index(this);
-    currentDef = definitions[i]
-    $('#wrong-defs-list-container').text(currentDef);
-    console.log(i)
+     var i = $('.incorrect-word-listing').index(this);
+     currentDef = definitions[i]
+     currentWord = word[i]
+     $('#myModal').css("display", "flex");
+     $('#modal-word').text(currentWord);
+     $('#modal-def').text(currentDef);
+     $('.incorrect-word-listing').css("pointer-events", "none");
   });
+}
+
+$('.close').click( function(){
+  $('#myModal').css("display", "none");
+  $('.incorrect-word-listing').css("pointer-events", "auto");
+});
+
+window.onclick = function (event) {
+    if (event.target == $('.modal')) {
+      $('.modal').css("display", "none");
+    }
 }
 
 $('#signOut').hide();
@@ -175,7 +189,7 @@ function renderButton() {
   gapi.signin2.render('my-signin2', {
     'scope': 'profile email',
     'width': 150,
-    'height': 54,
+    'height': 60,
     'longtitle': false,
     'theme': 'light',
     'onsuccess': onSuccess,
