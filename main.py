@@ -87,20 +87,23 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(main_var))
 
     def post(self):
+        selectionToCompare = self.request.get("option")
         userIDToken = self.request.get("IDs")
         nickName = self.request.get("nick")
-        self.sendUser(userIDToken, nickName)
-        selectionToCompare = self.request.get("option")
-        if not selectionToCompare:
-            self.processAnswer()
-            return
-        if selectionToCompare == MainHandler.definitionOfDisplayedWord:
-            response = "True"
-        else:
-            response = "False"
 
-        return_data = {"answer": response}
-        self.response.write(json.dumps(return_data))
+        if selectionToCompare:
+            if selectionToCompare.strip() == MainHandler.definitionOfDisplayedWord:
+                response = "True"
+            else:
+                response = "False"
+            return_data = {"answer": response}
+            self.response.write(json.dumps(return_data))
+
+        elif not selectionToCompare:
+            if not userIDToken or nickName:
+                self.processAnswer()
+            else:
+                self.sendUser(userIDToken, nickName)
 
     def sendUser(self, token, name):
         print token
@@ -117,13 +120,18 @@ class MainHandler(webapp2.RequestHandler):
 
     def processAnswer(self):
         checkAnswer = self.request.get("selection")
+        print checkAnswer
         if checkAnswer == "True":
             MainHandler.score += 1
-        else:
+            newscore = {"newscore": MainHandler.score}
+            self.response.write(json.dumps(newscore))
+        elif checkAnswer == "False":
+            MainHandler.score += 0
+            newscore = {"newscore": MainHandler.score}
+            self.response.write(json.dumps(newscore))
             self.wordsAsHTML(MainHandler.displayedWord)
 
-        newscore = {"newscore": MainHandler.score}
-        self.response.write(json.dumps(newscore))
+
 
     def wordsAsHTML(self, new_word):
         words_query = WrongWord.query()
@@ -143,11 +151,20 @@ class MainHandler(webapp2.RequestHandler):
 class WrongHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('templates/wrong.html')
+        self.response.out.write(template.render())
+
+    def post(self):
+        somePostFromJS = self.request.get("getresponse")
         words_query = WrongWord.query()
         word_data = words_query.get()
-        incorrectWords = {"incorrect": word_data.words}
-        self.response.write(json.dumps(incorrectWords))
-        #self.response.out.write(template.render())
+        if word_data == None:
+            self.response.out.write("No words to display.")
+        else:
+            if somePostFromJS == "True":
+                incorrectWords = {"incorrect": word_data.words}
+                self.response.write(json.dumps(incorrectWords))
+            else:
+                return False
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
