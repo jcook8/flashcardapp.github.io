@@ -34,23 +34,25 @@ function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile)
     $('#nextButtonPlaceholder').hide()
     $('#next').show()
     $('#next').click( function (){
-        window.location.assign("/")
+        window.location.assign("/");
     });
 }
 
 function defineTheTwoButtonsAndShowThem (){
   $('#redo-wrong').fadeIn(300);
   $('#redo').click( function(){
-    window.location.assign("/")
-
+    window.location.assign("/");
+    $.post("/", {"selection": "Reset"}, function(data){
+        console.log(JSON.parse(data))
+    });
   });
   $('#wrong').click( function(){
-    window.location.assign("/wrong")
+    window.location.assign("/wrong");
   });
 }
 
 function testNumberOfNexts(scoreKeep, score, numRounds){
-  if (scoreKeep.length == numRounds){
+  if (scoreKeep == numRounds){
     $('#next').hide()
     setTimeout( function (){
       $('#for-show-and-hide').hide()
@@ -112,7 +114,7 @@ function onSignIn(googleUser) {
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   $.post("/", {"IDs": id_token, "nick": nickname}, function(data){
-    console.log(data);
+     console.log(data);
   });
 }
 function signOut() {

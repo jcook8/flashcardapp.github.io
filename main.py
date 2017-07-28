@@ -57,7 +57,7 @@ class MainHandler(webapp2.RequestHandler):
     incorrectWord = None
     score = 0
     key = None
-    scoreKeep = []
+    scoreKeep = 0
     currentUserIDToken = None
     def get(self):
         template = env.get_template('templates/index.html')
@@ -116,11 +116,13 @@ class MainHandler(webapp2.RequestHandler):
 
     def signOutUser(self):
         MainHandler.currentUserIDToken = None
+        MainHandler.score = 0
+        MainHandler.scoreKeep = 0
         self.response.write("Signed out")
 
     def sendUser(self, token, name):
-        print token
-        print name
+        MainHandler.score = 0
+        MainHandler.scoreKeep = 0
         MainHandler.currentUserIDToken = token
         userQuery = User.query(User.IDs == token) #Finds All ID's of same token
         testIDs = userQuery.fetch() #Puts them in a list
@@ -134,21 +136,24 @@ class MainHandler(webapp2.RequestHandler):
 
     def processAnswer(self):
         checkAnswer = self.request.get("selection")
-        print checkAnswer
         if checkAnswer == "True":
             MainHandler.score += 1
-            MainHandler.scoreKeep.append(MainHandler.score)
+            MainHandler.scoreKeep += 1
             newscore = {"newscore": MainHandler.score,
                         "scorekeep": MainHandler.scoreKeep}
             self.response.write(json.dumps(newscore))
         elif checkAnswer == "False":
             MainHandler.score += 0
-            MainHandler.scoreKeep.append(MainHandler.score)
+            MainHandler.scoreKeep += 1
             newscore = {"newscore": MainHandler.score,
                         "scorekeep": MainHandler.scoreKeep}
             self.response.write(json.dumps(newscore))
             self.wordsAsHTML(MainHandler.displayedWord)
             self.definitionsAsHTML(MainHandler.definitionOfDisplayedWord)
+        else:
+            MainHandler.scoreKeep = 0
+            return_data = {"scorekeep": MainHandler.scoreKeep}
+            self.response.write(json.dumps(return_data))
 
     def wordsAsHTML(self, new_word):
         words_query = WrongWord.query(WrongWord.IDs == MainHandler.currentUserIDToken)
@@ -195,12 +200,15 @@ class WrongHandler(webapp2.RequestHandler):
         if word_data == None and define_data == None:
             self.response.out.write("No words to display.")
         else:
-            if somePostFromJS == "True":
-                incorrectVar = {"incorrectword": word_data.words,
-                                "incorrectdef": define_data.definitions}
-                self.response.write(json.dumps(incorrectVar))
+            if MainHandler.currentUserIDToken == None:
+                self.response.out.write("No words to display.")
             else:
-                return False
+              if somePostFromJS:
+                  incorrectVar = {"incorrectword": word_data.words,
+                                  "incorrectdef": define_data.definitions}
+                  self.response.write(json.dumps(incorrectVar))
+              else:
+                  return False
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

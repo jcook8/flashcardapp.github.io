@@ -9,7 +9,7 @@ $(document).ready( function(){
 
 function detectIfIncorrectWordsExistOnPage (){
   if ( $('div.incorrect-word-listing').length){
-    $('#wrong-words-page-header').text("You Got These Words Wrong lol");
+    $('#wrong-words-page-header').text("You Got These Words Wrong (lol)");
   } else {
     $('#wrong-words-page-header').text("No Incorrect Words to Display");
   }
