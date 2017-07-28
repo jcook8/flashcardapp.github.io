@@ -121,8 +121,6 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write("Signed out")
 
     def sendUser(self, token, name):
-        MainHandler.score = 0
-        MainHandler.scoreKeep = 0
         MainHandler.currentUserIDToken = token
         userQuery = User.query(User.IDs == token) #Finds All ID's of same token
         testIDs = userQuery.fetch() #Puts them in a list
@@ -136,24 +134,27 @@ class MainHandler(webapp2.RequestHandler):
 
     def processAnswer(self):
         checkAnswer = self.request.get("selection")
-        if checkAnswer == "True":
-            MainHandler.score += 1
-            MainHandler.scoreKeep += 1
-            newscore = {"newscore": MainHandler.score,
-                        "scorekeep": MainHandler.scoreKeep}
-            self.response.write(json.dumps(newscore))
-        elif checkAnswer == "False":
-            MainHandler.score += 0
-            MainHandler.scoreKeep += 1
-            newscore = {"newscore": MainHandler.score,
-                        "scorekeep": MainHandler.scoreKeep}
-            self.response.write(json.dumps(newscore))
-            self.wordsAsHTML(MainHandler.displayedWord)
-            self.definitionsAsHTML(MainHandler.definitionOfDisplayedWord)
-        else:
+        nextButtonClick = self.request.get("reset")
+        if checkAnswer:
+            if checkAnswer == "True":
+                MainHandler.score += 1
+                MainHandler.scoreKeep += 1
+                newscore = {"newscore": MainHandler.score,
+                            "scorekeep": MainHandler.scoreKeep}
+                self.response.write(json.dumps(newscore))
+            elif checkAnswer == "False":
+                MainHandler.score += 0
+                MainHandler.scoreKeep += 1
+                newscore = {"newscore": MainHandler.score,
+                            "scorekeep": MainHandler.scoreKeep}
+                self.response.write(json.dumps(newscore))
+                self.wordsAsHTML(MainHandler.displayedWord)
+                self.definitionsAsHTML(MainHandler.definitionOfDisplayedWord)
+        elif nextButtonClick:
             MainHandler.scoreKeep = 0
-            return_data = {"scorekeep": MainHandler.scoreKeep}
-            self.response.write(json.dumps(return_data))
+            newscore = {"newscore": MainHandler.score,
+                        "scorekeep": MainHandler.scoreKeep}
+            self.response.write(json.dumps(newscore))
 
     def wordsAsHTML(self, new_word):
         words_query = WrongWord.query(WrongWord.IDs == MainHandler.currentUserIDToken)

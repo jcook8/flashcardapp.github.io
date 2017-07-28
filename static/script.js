@@ -27,6 +27,7 @@ function declareWhetherAnswerIsCorrectOrNotThenAddNextButton(responseFromPyFile)
     $.post("/", {"selection": correctness}, function(data) {
         parsedscore = JSON.parse(data)
         console.log(parsedscore.scorekeep);
+        console.log(parsedscore.newscore);
         $('#scoreNum').text(JSON.parse(data).newscore);
         testNumberOfNexts(parsedscore.scorekeep, parsedscore.newscore, 5);
     });
@@ -42,8 +43,8 @@ function defineTheTwoButtonsAndShowThem (){
   $('#redo-wrong').fadeIn(300);
   $('#redo').click( function(){
     window.location.assign("/");
-    $.post("/", {"selection": "Reset"}, function(data){
-        console.log(JSON.parse(data))
+    $.post("/", {"reset": "Reset"}, function(data){
+        console.log(JSON.parse(data).newscore)
     });
   });
   $('#wrong').click( function(){
@@ -133,7 +134,7 @@ function onSuccess(googleUser) {
   console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
   onSignIn(googleUser);
   $('#my-signin2').hide();
-  $('#signOut').show();
+  $('#signOut').show()
 }
 function onFailure(error) {
   console.log(error);
